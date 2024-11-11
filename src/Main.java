@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,35 +9,59 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("enter  the number of rows for the matrix :");
-        int Rows = scanner.nextInt();
-        System.out.println("enter  the number of columns for the matrix");
-        int Columns = scanner.nextInt();
-        int[][] Matrix = new int[Rows][Columns];
-        for (int i = 0; i < Rows; i++) {
-            for (int j = 0; j < Columns; j++) {
-                /*
-                 * the deliberate addition of 1 to the indexes is to make it more human inherent or readable.
-                 * thus for instance "(0,0)"   will become " (1,1)" which is more inherent to the
-                 * way humans  read matrices.
-                 */
-                System.out.println(" enter value at (" + (i + 1) + "," + (j + 1) + ")");
-                Matrix[i][j] = scanner.nextInt();
+        //the while loop makes sure the program  restarts even after an escape  in one of the statements in its scope.
+        while (true) {
+            System.out.println("enter  the number of rows for the matrix :");
+            try {
+
+                int Rows = scanner.nextInt();
+                // make sure the entered row has at least a size of 1, else I consider it invalid;
+                if (Rows < 1) {
+                    System.out.println("Rows must be a positive integer greater than 0");
+                    System.out.println("Program will restart");
+
+                    //exit the program execution  at this point.
+                    continue;
+                }
+                System.out.println("enter  the number of columns for the matrix");
+
+                int Columns = scanner.nextInt();
+                if (Columns < 1) {
+                    System.out.println("Columns must be a positive integer greater than 0");
+                    System.out.println("Program will restart");
+                    continue;
+                }
+                int[][] Matrix = new int[Rows][Columns];
+                for (int i = 0; i < Rows; i++) {
+                    for (int j = 0; j < Columns; j++) {
+                        /*
+                         * the deliberate addition of 1 to the indexes is to make it more human inherent or readable.
+                         * thus for instance "(0,0)"   will become " (1,1)" which is more inherent to the
+                         * way humans  read matrices.
+                         */
+                        System.out.println(" enter value at (" + (i + 1) + "," + (j + 1) + ")");
+                        Matrix[i][j] = scanner.nextInt();
+                    }
+
+
+                }
+                System.out.println(" the matrix you entered is ");
+                for (int i = 0; i < Rows; i++) {
+                    for (int j = 0; j < Columns; j++) {
+                        System.out.print(Matrix[i][j]);
+                    }
+                    System.out.println();
+                }
+                System.out.println("The peak columns are :");
+
+
+                peakColumns(Matrix, Rows, Columns);
+            } catch (InputMismatchException e) {
+                System.out.println(" Bad input entered , program will restart");
+                scanner.next();
             }
-
-
+            break;
         }
-        System.out.println(" the matrix you entered is ");
-        for (int i = 0; i < Rows; i++) {
-            for (int j = 0; j < Columns; j++) {
-                System.out.print(Matrix[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println("The peak columns are :");
-
-
-        peakColumns(Matrix, Rows, Columns);
     }
 
     public static void peakColumns(int[][] Matrix, int nRows, int nColumns) {
@@ -61,7 +86,6 @@ public class Main {
                 boolean isMaxInColumn = true;
 
                 for (int col = 0; col < nColumns; col++) {
-
 
 
                     if (Matrix[i][j] < Matrix[i][col]) {
@@ -115,6 +139,7 @@ public class Main {
                 int value = peakNumbers.get(k / 2);
                 System.out.println("(" + row + "," + col + ")" + " = " + value);
             }
+
 
         }
     }
