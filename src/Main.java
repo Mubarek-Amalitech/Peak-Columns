@@ -56,11 +56,13 @@ public class Main {
 
 
                 peakColumns(Matrix, Rows, Columns);
-            } catch (InputMismatchException e) {
+
+           break; }  catch (InputMismatchException e) {
                 System.out.println(" Bad input entered , program will restart");
                 scanner.next();
             }
-            break;
+
+
         }
     }
 
